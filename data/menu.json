@@ -1,0 +1,153 @@
+{
+  "categories": [
+    {
+      "id": "menu_do_barista",
+      "name": "Menu do Barista",
+      "items": [
+        { "name": "Espresso", "price": "R$ 9,50", "description": "Dose de espresso. 30ml" },
+        { "name": "Duplo", "price": "R$ 14", "description": "Dose de espresso duplo 50ml" },
+        { "name": "Carioca", "price": "R$ 9,50", "description": "Dose de espresso diluída em água. 50ml" },
+        { "name": "Americano", "price": "R$ 14", "description": "Dose de espresso duplo diluída em água 100ml" },
+        { "name": "Naked", "price": "R$ 14", "description": "Dose de espresso duplo no filtro Naked, proporcionando uma bebida mais encorpada e intensa 40ml" },
+        { "name": "Ristretto", "price": "R$ 14", "description": "Espresso curto, concentrado e intenso. 15ml" },
+        { "name": "Cortado", "price": "R$ 16", "description": "Dose de espresso com leite vaporizado 100ml" },
+        { "name": "Caramel Cortado", "price": "R$ 17", "description": "Dose de espresso com syrup de caramelo salgado, toque de canela e leite vaporizado 100ml" },
+        { "name": "Macchiato", "price": "R$ 17", "description": "Dose de espresso duplo com leite vaporizado. 100ml" },
+        { "name": "Latte", "price": "R$ 18", "description": "Bebida à base de leite vaporizado com uma dose de café espresso. 200ml" },
+        { "name": "Flat White", "price": "R$ 20", "description": "Bebida à base de espresso duplo e leite vaporizado. 200ml" },
+        { "name": "Mocha", "price": "R$ 22", "description": "Espresso duplo extraído sobre ganache de chocolate, finalizado com leite vaporizado. 200ml" },
+        { "name": "Chocolate Quente", "price": "Pequeno R$ 16 | Grande R$ 22", "description": "Chocolate quente da casa finalizado com raspas de chocolate" }
+      ]
+    },
+    {
+      "id": "cappuccinos",
+      "name": "Cappuccinos",
+      "items": [
+        { "name": "Cappuccino", "price": "R$ 18", "description": "Tradicional bebida italiana à base de espresso e leite vaporizado 180ml" },
+        { "name": "Veggie", "price": "R$ 18", "description": "Tradicional bebida italiana à base de espresso e leite de aveia vaporizado. 180ml" },
+        { "name": "Cacau & Canela", "price": "R$ 20", "description": "Espresso extraído sobre ganache de chocolate, canela e leite vaporizado 180ml" },
+        { "name": "Noisette", "price": "R$ 20", "description": "Espresso extraído sobre syrup de avelã com leite vaporizado, finalizado com raspas de avelã 180ml" },
+        { "name": "Vanille", "price": "R$ 20", "description": "Espresso extraído sobre syrup de baunilha com leite vaporizado 180ml" },
+        { "name": "Caramel", "price": "R$ 20", "description": "Espresso extraído sobre syrup de caramelo salgado, toque de canela e leite vaporizado. 180ml" }
+      ]
+    },
+    {
+      "id": "cafes_coados",
+      "name": "Cafés Coados",
+      "items": [
+        { "name": "Do Dia", "price": "Pequeno R$ 14 | Grande R$ 18", "description": "Pequeno (100 ml) no Aeropress. Grande (200 ml) em qualquer método: Aeropress, V60, Clever ou Prensa." },
+        { "name": "Seleção do mês", "price": "Pequeno R$ 18 | Grande R$ 22", "description": "Pequeno (100 ml) no Aeropress. Grande (200 ml) em qualquer método: Aeropress, V60, Clever ou Prensa." }
+      ]
+    },
+    {
+      "id": "cafes_gelados",
+      "name": "Cafés Gelados",
+      "items": [
+        { "name": "Cold Brew", "price": "R$ 18", "description": "Café gelado em infusão por 12 horas, servido com gelo. 250ml" },
+        { "name": "Laranja Mecânica", "price": "R$ 20", "description": "Drink de café gelado com shot de laranja, syrup de baunilha e gelo 250ml" },
+        { "name": "Moulin Rouge", "price": "R$ 20", "description": "Drink de café gelado com água gasosa, syrup de cranberry e gelo 330ml" },
+        { "name": "Espresso Tônica", "price": "R$ 20", "description": "Bebida refrescante à base de espresso, água tônica, limão taiti, syrup de gengibre e gelo. 300ml" },
+        { "name": "Espresso Pomme", "price": "R$ 20", "description": "Bebida refrescante à base de espresso, água gaseificada e syrup de maçã verde 300ml" },
+        { "name": "Latte Gelado", "price": "R$ 18", "description": "Bebida à base de leite com uma dose de espresso e gelo. 300ml" },
+        { "name": "Mocha Gelado", "price": "R$ 22", "description": "Espresso extraído sobre ganache de chocolate, gelo, leite, finalizado com raspas de chocolate 300ml" },
+        { "name": "Vanille Gelado", "price": "R$ 22", "description": "Bebida à base espresso, leite, syrup de baunilha e gelo 300ml" },
+        { "name": "Noisette Gelado", "price": "R$ 22", "description": "Bebida à base de espresso, leite, syrup de avelã, gelo e raspas de avelã. 300ml" },
+        { "name": "Caramel Gelado", "price": "R$ 22", "description": "Bebida à base de espresso, leite, syrup de caramelo salgado, gelo e finalizado com caramelo salgado 300ml" },
+        { "name": "Affogato", "price": "R$ 25", "description": "Gelato de baunilha Faenza finalizado com dose de espresso" }
+      ]
+    },
+    {
+      "id": "matchas_chas",
+      "name": "Matchas & Chás",
+      "items": [
+        { "name": "Matcha Latte", "price": "R$ 17", "description": "Chá verde concentrado à base de leite vaporizado, levemente adoçado com syrup de baunilha" },
+        { "name": "Matcha Latte Veggie", "price": "R$ 19", "description": "Chá verde concentrado à base de leite de aveia vaporizado e levemente adoçado com syrup de baunilha" },
+        { "name": "Matcha Tônica", "price": "R$ 19", "description": "Chá verde concentrado, servido gelado, com água tônica, hortelã e gelo" },
+        { "name": "Matcha Ice", "price": "R$ 19", "description": "Chá verde concentrado com leite de aveia, gelo e levemente adoçado com syrup de baunilha" },
+        { "name": "Matcha do Brasil", "price": "R$ 19", "description": "Chá verde concentrado, shot de laranja, syrup de gengibre e gelo" },
+        { "name": "Chá Intuição", "price": "R$ 18", "description": "Quente ou Gelado. Chá especial de maçã, morango, framboesa, amora, blueberry e hibisco" },
+        { "name": "Chá Intimidade", "price": "R$ 18", "description": "Quente ou Gelado. Chá especial de capim-limão, pêra, flores de clitórea, botões de jasmim e maçã" }
+      ]
+    },
+    {
+      "id": "para_acompanhar_o_cafe",
+      "name": "Para Acompanhar o Café",
+      "items": [
+        { "name": "Pão de Queijo", "price": "R$ 8,50", "description": "Pão de queijo da casa com parmesão da Fazenda Serra Boa Vista e canastra." },
+        { "name": "Na Chapa", "price": "R$ 17", "description": "Fatia de pão petrópolis na chapa com creme de boursin, mel, cebolinha e toque de zatar" },
+        { "name": "Waffle", "price": "R$ 26", "description": "2 un. de waffle de massa de pão de queijo e uma opção de acompanhamento (Manteiga de ervas | Mel | Calda de Chocolate | Geleia da casa)" },
+        { "name": "Waffle Royal", "price": "R$ 25", "description": "1 un. de waffle de massa de pão de queijo, creme de parmesão da Fazenda Serra Boa Vista, crispy de bacon e cebolinha" },
+        { "name": "Croissant", "price": "R$ 28", "description": "Croissant Oui Uai com manteiga de ervas da casa" }
+      ]
+    },
+    {
+      "id": "toasts",
+      "name": "Toasts",
+      "items": [
+        { "name": "Clássico", "price": "R$ 28", "description": "Pão italiano com ovos mexidos, finalizado com crispy de bacon e cebolinha" },
+        { "name": "Voilà", "price": "R$ 29", "description": "Pão italiano, creme de parmesão da Fazenda Serra Boa Vista, presunto e canastra" },
+        { "name": "Chèvre", "price": "R$ 34", "description": "Pão italiano, queijo boursin, homus de beterraba, confit de laranja e redução de balsâmico" },
+        { "name": "Veggie", "price": "R$ 32", "description": "Pão italiano selado no azeite, abacate, tomate, cebola roxa, salsinha, finalizado com raspas de limão siciliano" },
+        { "name": "Caprese", "price": "R$ 32", "description": "Pão italiano com muçarela, rúcula, tomate confit, pesto de manjericão, finalizado com canastra" }
+      ]
+    },
+    {
+      "id": "sanduiches_brunch",
+      "name": "Sanduíches & Brunch",
+      "items": [
+        { "name": "Misto", "price": "R$ 24", "description": "Nosso misto com pão petrópolis, queijo muçarela e presunto" },
+        { "name": "Fromage Tropical", "price": "R$ 29", "description": "Pão petrópolis com requeijão de corte, abacaxi e geleia de pimenta" },
+        { "name": "Canastrinha", "price": "R$ 29", "description": "Pão petrópolis com queijo canastra, cebola caramelizada e alho poró" },
+        { "name": "Croque-Monsieur", "price": "R$ 32", "description": "Pão petrópolis, muçarela, presunto, coberto com molho béchamel" },
+        { "name": "Croque-Madame", "price": "R$ 34", "description": "Pão petrópolis, muçarela, presunto, coberto com molho béchamel, finalizado com ovo frito" },
+        { "name": "Bon Vivant", "price": "R$ 40", "description": "Ciabatta, parmesão da Fazenda Serra Boa Vista, tomate temperado, alface, cebola roxa e molho da casa" },
+        { "name": "Cogu", "price": "R$ 44", "description": "Ciabatta selada na manteiga de ervas, cogumelo paris, cebola caramelizada, cebolinha e muçarela" },
+        { "name": "Brunch Bohème", "price": "R$ 38", "description": "Ovos mexidos, bacon, saladinha de folhas com molho da casa e pão italiano" }
+      ]
+    },
+    {
+      "id": "doces",
+      "name": "Nossos Doces",
+      "items": [
+        { "name": "Choux", "price": "R$ 14", "description": "Tradicional doce francês com recheio de baunilha e cumaru" },
+        { "name": "Cheesecake", "price": "R$ 19", "description": "Delicioso cheesecake com geleia de frutas vermelhas da casa" },
+        { "name": "Tarte au Citron", "price": "R$ 18", "description": "Tradicional base sucrée, curd de limão, merengue, finalizado com raspas de limão siciliano" },
+        { "name": "Chocolat Surprise", "price": "R$ 15", "description": "Bombom com recheio de bolo de amêndoas e cacau, ganache de chocolate e caramelo, finalizado com avelã" },
+        { "name": "Waffle à la crème", "price": "R$ 28", "description": "1 un. de waffle, geleia de frutas vermelhas, gelato de baunilha Faenza, ganache de chocolate branco finalizado com raspas de amêndoas" },
+        { "name": "Brownie", "price": "R$ 18", "description": "Nosso brownie com calda de caramelo salgado e praliné" },
+        { "name": "Cookie", "price": "R$ 15", "description": "Tradicional cookie americano produzido na casa" },
+        { "name": "Bolo", "price": "R$ 14", "description": "Consulte a opção do dia" }
+      ]
+    },
+    {
+      "id": "adicionais",
+      "name": "Adicionais",
+      "items": [
+        { "name": "Queijo", "price": "R$ 5", "description": "" },
+        { "name": "Presunto", "price": "R$ 5", "description": "" },
+        { "name": "Bacon", "price": "R$ 4", "description": "" },
+        { "name": "Ovo", "price": "R$ 4", "description": "" },
+        { "name": "Boursin", "price": "R$ 8", "description": "" },
+        { "name": "Geleia", "price": "R$ 5", "description": "" },
+        { "name": "Mel", "price": "R$ 6", "description": "" },
+        { "name": "Manteiga de ervas", "price": "R$ 5", "description": "" },
+        { "name": "Bola de Gelato de baunilha Faenza", "price": "R$ 14", "description": "" },
+        { "name": "Calda de Chocolate", "price": "R$ 6", "description": "" },
+        { "name": "Leite de Aveia (Substituição)", "price": "R$ 5", "description": "Todos os nossos leites podem ser substituídos por leite de aveia." },
+        { "name": "Saladinha (Acompanhamento Toasts)", "price": "R$ 10", "description": "Todos os nossos Toasts podem ser acompanhados de uma saladinha." }
+      ]
+    },
+    {
+      "id": "soft_drinks",
+      "name": "Soft Drinks",
+      "items": [
+        { "name": "Pink Lemonade", "price": "R$ 18", "description": "Bebida refrescante à base de água com gás, syrup de cranberry e shot de limão" },
+        { "name": "Soda Italiana", "price": "R$ 16", "description": "Bebida refrescante à base de água com gás e syrup (Limão siciliano, Maçã verde ou Cranberry)" },
+        { "name": "Mate Gelado", "price": "R$ 15", "description": "Chá mate feito na casa com limão e capim cidreira" },
+        { "name": "Água Natural ou Gasosa", "price": "R$ 6,50", "description": "" },
+        { "name": "Refrigerante", "price": "R$ 7", "description": "220ml" },
+        { "name": "Suco de Laranja Natural", "price": "R$ 14", "description": "" }
+      ]
+    }
+  ]
+}
