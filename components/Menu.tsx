@@ -84,18 +84,22 @@ export default function Menu() {
           </AnimatePresence>
         </div>
 
-        <div className="mt-20 text-center">
+        <div className="mt-20  text-center w-full">
           <p className="text-boheme-brown/40 text-sm italic mb-8">
-            * Consulte nossa equipe sobre opções veganas e restrições alimentares.
+              * Consulte nossa equipe sobre opções veganas e restrições alimentares.
           </p>
-          <Button asChild variant="outline" className="px-12 py-6 border-2 border-boheme-brown text-boheme-brown rounded-full font-bold uppercase tracking-widest hover:bg-boheme-brown hover:text-white transition-all duration-300">
-            <a href="#reservas">Reservar uma Mesa</a>
-          </Button>
-          <Button asChild variant="outline" className="ml-6 px-12 py-6 border-2 border-boheme-brown text-boheme-brown rounded-full font-bold uppercase tracking-widest hover:bg-boheme-brown hover:text-white transition-all duration-300">
-            <a href={cardapioPdf} download="Cardapio_Boheme_2025.pdf" target="_blank" rel="noopener noreferrer">
-              Download do Cardápio
-            </a>
-          </Button>
+          <div className='flex flex-col lg:flex-row gap-4 justify-center items-center'>
+
+            <Button asChild variant="outline" className="px-12 py-6 w-full max-w-md border-2 border-boheme-brown text-boheme-brown rounded-full font-bold 
+            uppercase tracking-widest hover:bg-boheme-brown hover:text-white transition-all duration-300">
+              <a href="#reservas">Reservar uma Mesa</a>
+            </Button>
+            <Button asChild variant="outline" className="px-12 py-6 w-full max-w-md border-2 border-boheme-brown text-boheme-brown rounded-full font-bold uppercase tracking-widest hover:bg-boheme-brown hover:text-white transition-all duration-300">
+              <a href={cardapioPdf} download="Cardapio_Boheme_2025.pdf" target="_blank" rel="noopener noreferrer">
+                Download do Cardápio
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

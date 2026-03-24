@@ -1,24 +1,26 @@
 'use client';
 import { motion } from 'motion/react';
+
 const image = '/boheme-logos.png';
+
 
 const highlights = [
   {
     name: 'Tarte Au Citron',
     price: 'R$ 24',
-    image: 'https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&q=80&w=800',
+    image: '/photo-tarte-citron.png',
     category: 'Pastelaria'
   },
   {
     name: 'Cappuccino Vanille',
     price: 'R$ 18',
-    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&q=80&w=800',
+    image: '/photo-capputino-vanille.png',
     category: 'Cafés'
   },
   {
     name: 'Croque-monsieur',
     price: 'R$ 38',
-    image: 'https://images.unsplash.com/photo-1475090169767-40ed8d18f67d?auto=format&fit=crop&q=80&w=800',
+    image: '/photo-croque-monsieur.png',
     category: 'Salgados'
   }
 ];
@@ -26,7 +28,7 @@ const highlights = [
 export default function ChefHighlights() {
   return (
     <>
-    <section id="destaques" className="py-24 px-6 relative  bg-white">
+    <section id="destaques" className="py-24 px-6 relative bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">

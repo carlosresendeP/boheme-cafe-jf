@@ -1,5 +1,6 @@
 'use client';
-import { Coffee, Send, MessageCircle } from 'lucide-react';
+import { Coffee } from 'lucide-react';
+import { FaInstagram,FaFacebookSquare,FaWhatsapp   } from "react-icons/fa";
 
 export default function Footer() {
 
@@ -36,9 +37,9 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-sm uppercase tracking-widest mb-6 text-boheme-bronze">Social</h4>
             <ul className="space-y-4 text-sm text-white/70">
-              <li><a href="#" className="flex items-center gap-2 hover:text-white transition-colors"><Send className="w-4 h-4" /> Instagram</a></li>
-              <li><a href="#" className="flex items-center gap-2 hover:text-white transition-colors"><Coffee className="w-4 h-4" /> Facebook</a></li>
-              <li><a href="#" className="flex items-center gap-2 hover:text-white transition-colors"><MessageCircle className="w-4 h-4" /> WhatsApp</a></li>
+              <li><a href="#" className="flex items-center gap-2 hover:text-white transition-colors"><FaInstagram className="w-4 h-4" /> Instagram</a></li>
+              <li><a href="#" className="flex items-center gap-2 hover:text-white transition-colors"><FaFacebookSquare className="w-4 h-4" /> Facebook</a></li>
+              <li><a href="#" className="flex items-center gap-2 hover:text-white transition-colors"><FaWhatsapp className="w-4 h-4" /> WhatsApp</a></li>
             </ul>
           </div>
         </div>
