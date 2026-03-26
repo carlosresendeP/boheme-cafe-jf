@@ -59,19 +59,19 @@ export default function Essence() {
             perfeito para encontros memoráveis, momentos de foco ou simplesmente 
             para apreciar uma excelente pastelaria artesanal.
           </p>
-          <div className="flex items-center gap-6 pt-4">
+          <div className="flex items-center justify-between gap-3 md:gap-6 pt-4">
             <div className="text-center">
-              <span className="block text-3xl font-serif text-boheme-bronze">4.9</span>
+              <span className="block text-2xl md:text-3xl font-serif text-boheme-bronze">4.9</span>
               <span className="text-xs uppercase tracking-widest opacity-60">Estrelas</span>
             </div>
             <div className="w-px h-12 bg-boheme-brown/10" />
             <div className="text-center">
-              <span className="block text-3xl font-serif text-boheme-bronze">190+</span>
+              <span className="block text-2xl md:text-3xl font-serif text-boheme-bronze">190+</span>
               <span className="text-xs uppercase tracking-widest opacity-60">Avaliações</span>
             </div>
             <div className="w-px h-12 bg-boheme-brown/10" />
             <div className="text-center">
-              <span className="block text-3xl font-serif text-boheme-bronze">Premium</span>
+              <span className="block text-2xl md:text-3xl font-serif text-boheme-bronze">Premium</span>
               <span className="text-xs uppercase tracking-widest opacity-60">Qualidade</span>
             </div>
           </div>

@@ -3,16 +3,11 @@ import { useEffect, useRef } from 'react';
 // Total de frames: frame_000.png … frame_081.png
 const FRAME_COUNT = 82;
 
-/**
- * Formata o índice para zero-padded com 3 dígitos: 0 → "000"
- */
 const frameSrc = (index: number) =>
   `/animate-video/frame_${String(index).padStart(3, '0')}.png`;
 
 export default function BackgroundVideo() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  // 1. ALTERADO: Inicia com o maior frame (81) em vez de 0
   const currentFrameRef = useRef(FRAME_COUNT - 1);
   const rafRef = useRef<number | null>(null);
 
@@ -22,7 +17,6 @@ export default function BackgroundVideo() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Resolução nativa do canvas (será escalado via CSS)
     canvas.width = 1920;
     canvas.height = 1080;
 
@@ -33,44 +27,41 @@ export default function BackgroundVideo() {
       return img;
     });
 
-    // 2. ALTERADO: Desenha o frame final (81) assim que carregar para a tela inicial
-    images[FRAME_COUNT - 1].onload = () => {
-      ctx.drawImage(images[FRAME_COUNT - 1], 0, 0, canvas.width, canvas.height);
+    // Carrega o frame inicial com prioridade e faz fade-in ao pintar
+    const initialFrame = images[FRAME_COUNT - 1];
+    initialFrame.onload = () => {
+      ctx.drawImage(initialFrame, 0, 0, canvas.width, canvas.height);
+      // Revela o canvas suavemente após o primeiro frame estar pronto
+      canvas.style.transition = 'opacity 0.4s ease';
+      canvas.style.opacity = '0.85';
     };
+    // Se a imagem já estava em cache, dispara imediatamente
+    if (initialFrame.complete && initialFrame.naturalWidth > 0) {
+      ctx.drawImage(initialFrame, 0, 0, canvas.width, canvas.height);
+      canvas.style.opacity = '0.85';
+    }
 
     // ── Scroll handler ────────────────────────────────────────────────────
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const sectionHeight = window.innerHeight * 2; // 200vh de espaço de scroll efetivo
+      const sectionHeight = window.innerHeight * 2;
       const scrollFraction = Math.min(1, scrollTop / sectionHeight);
-      
-      // 3. ALTERADO: Inverte a matemática (1 - scrollFraction). 
-      // Scroll 0% = Frame 81 | Scroll 100% = Frame 0
-      const targetFrame = (1 - scrollFraction) * (FRAME_COUNT - 1);
-
-      // Atualiza o target; o loop de RAF faz a interpolação
-      currentFrameRef.current = targetFrame;
+      currentFrameRef.current = (1 - scrollFraction) * (FRAME_COUNT - 1);
     };
 
-    // ── Loop de animação com lerp (easing suave) ─────────────────────────
-    
-    // 4. ALTERADO: A variável de controle de exibição também precisa iniciar no máximo
+    // ── Loop de animação com lerp ─────────────────────────────────────────
     let displayedFrame = FRAME_COUNT - 1;
 
     const animate = () => {
       rafRef.current = requestAnimationFrame(animate);
 
       const target = currentFrameRef.current;
-      // Lerp: aproxima 12% da distância a cada frame → suavidade natural
       const lerped = displayedFrame + (target - displayedFrame) * 0.12;
 
-      // Só redesenha se mudou de frame inteiro
       const frameIndex = Math.round(lerped);
       const prevIndex = Math.round(displayedFrame);
-
       displayedFrame = lerped;
 
-      // Verifica mudança ou se é a montagem inicial (onde displayedFrame está no limite superior)
       if (frameIndex !== prevIndex || displayedFrame === FRAME_COUNT - 1) {
         const img = images[Math.max(0, Math.min(frameIndex, FRAME_COUNT - 1))];
         if (img && img.complete && img.naturalWidth > 0) {
@@ -90,13 +81,16 @@ export default function BackgroundVideo() {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-0">
+    // bg-[#1a0d00] = cor escura quente do café → elimina o flash preto
+    <div className="absolute inset-0 z-0 bg-[#1a0d00]">
       <canvas
         ref={canvasRef}
-        className="w-full h-full object-cover opacity-85"
+        // Começa invisível; fade-in via JS após o primeiro frame pintar
+        className="w-full h-full object-cover"
+        style={{ opacity: 0 }}
         aria-hidden="true"
       />
-      {/* Gradiente escuro suave para legibilidade do texto */}
+      {/* Gradiente escuro para legibilidade do texto */}
       <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/20 to-black/50" />
     </div>
   );

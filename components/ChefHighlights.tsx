@@ -8,7 +8,7 @@ const highlights = [
   {
     name: 'Tarte Au Citron',
     price: 'R$ 24',
-    image: '/photo-tarte-citron.png',
+    image: '/photo-tarte-Citron.png',
     category: 'Pastelaria'
   },
   {
