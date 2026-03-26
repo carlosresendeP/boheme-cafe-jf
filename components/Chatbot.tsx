@@ -1,34 +1,22 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+
+import { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, X, Send, Coffee, Loader2 } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
 import Markdown from 'react-markdown';
-
-const SYSTEM_INSTRUCTION = `
-Você é o Concierge Digital do Bohème Café, localizado em São Mateus, Juiz de Fora.
-Sua personalidade é elegante, acolhedora e prestativa (Boho Chic Moderno).
-Seu objetivo é ajudar os clientes com informações sobre o cardápio, ambiente, reservas e localização.
-
-Informações Importantes:
-- Endereço: R. Francisco Brandi, 177 - São Mateus, Juiz de Fora.
-- Horário: Seg-Sáb 08h-20h, Dom 09h-18h.
-- Especialidades: Tarte Au Citron, Cappuccino Vanille, Croque-monsieur, Café Caramel Cortado e Matcha Latte.
-- Diferenciais: Wi-Fi rápido, tomadas, ambiente climatizado, poltronas confortáveis (ideal para trabalho).
-- Reservas: Podem ser feitas pelo site ou WhatsApp.
-- Preços: Ticket médio entre R$ 40-60.
-
-Responda de forma concisa e use um tom de "luxo acessível". Use emojis de café e sofisticação moderadamente.
-Se não souber algo, sugira falar com um humano pelo WhatsApp.
-`;
+import { useChat } from '@ai-sdk/react';
+import type { UIMessage } from 'ai';
 
 export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showPrompt, setShowPrompt] = useState(false);
-  const [messages, setMessages] = useState<{ role: 'user' | 'model'; text: string }[]>([]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [showPrompt, setShowPrompt] = useState<boolean>(false);
+  const [value, setValue] = useState<string>('');
+  
+  // Tipagem forte para a ref da div de scroll
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const { messages, sendMessage, status } = useChat();
+  const isLoading = status === 'submitted' || status === 'streaming';
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,41 +31,32 @@ export default function Chatbot() {
     }
   }, [messages]);
 
-  const handleSendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+  // Função tipada para os botões de resposta rápida
+  const handleQuickReply = async (text: string): Promise<void> => {
+    const trimmed = text.trim();
+    if (!trimmed || isLoading) return;
+    await sendMessage({ text: trimmed });
+  };
 
-    const userMessage = input.trim();
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
-    setIsLoading(true);
+  const extractMessageText = (message: UIMessage): string => {
+    // O UIMessage armazena o texto dentro de `parts`.
+    return message.parts
+      .filter((p) => p.type === 'text')
+      .map((p) => p.text)
+      .join('');
+  };
 
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
-      const model = ai.models.generateContent({
-        model: 'gemini-3.1-pro-preview',
-        contents: [
-          ...messages.map(m => ({ role: m.role, parts: [{ text: m.text }] })),
-          { role: 'user', parts: [{ text: userMessage }] }
-        ],
-        config: {
-          systemInstruction: SYSTEM_INSTRUCTION,
-        }
-      });
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    const trimmed = value.trim();
+    if (!trimmed || isLoading) return;
 
-      const response = await model;
-      const text = response.text || 'Desculpe, tive um pequeno problema técnico. Poderia repetir?';
-      
-      setMessages(prev => [...prev, { role: 'model', text }]);
-    } catch (error) {
-      console.error('Chatbot error:', error);
-      setMessages(prev => [...prev, { role: 'model', text: 'Estou com dificuldades de conexão no momento. Que tal nos chamar no WhatsApp?' }]);
-    } finally {
-      setIsLoading(false);
-    }
+    setValue('');
+    await sendMessage({ text: trimmed });
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 z-100 flex flex-col items-end">
       {/* Proactive Prompt */}
       <AnimatePresence>
         {showPrompt && !isOpen && (
@@ -126,7 +105,7 @@ export default function Chatbot() {
             </div>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-grow overflow-y-auto p-6 space-y-4 no-scrollbar">
+            <div ref={scrollRef} className="grow overflow-y-auto p-6 space-y-4 no-scrollbar">
               {messages.length === 0 && (
                 <div className="text-center py-10 space-y-4">
                   <Coffee className="w-12 h-12 text-boheme-bronze/20 mx-auto" />
@@ -134,13 +113,10 @@ export default function Chatbot() {
                     Como posso tornar seu dia mais especial hoje?
                   </p>
                   <div className="flex flex-wrap justify-center gap-2">
-                    {['Ver Cardápio', 'Reservar Mesa', 'Localização'].map(btn => (
+                    {['Ver Cardápio', 'Reservar Mesa', 'Localização'].map((btn: string) => (
                       <button
                         key={btn}
-                        onClick={() => {
-                          setInput(btn);
-                          // We trigger the send logic manually or just set input
-                        }}
+                        onClick={() => handleQuickReply(btn)}
                         className="text-[10px] uppercase tracking-widest px-3 py-2 border border-boheme-brown/10 rounded-full hover:bg-boheme-cream transition-colors"
                       >
                         {btn}
@@ -149,14 +125,14 @@ export default function Chatbot() {
                   </div>
                 </div>
               )}
-              {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              {messages.map((m: UIMessage) => (
+                <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${
                     m.role === 'user' 
                       ? 'bg-boheme-bronze text-white rounded-tr-none' 
                       : 'bg-boheme-cream text-boheme-brown rounded-tl-none'
                   }`}>
-                    <Markdown>{m.text}</Markdown>
+                    <Markdown>{extractMessageText(m)}</Markdown>
                   </div>
                 </div>
               ))}
@@ -169,26 +145,25 @@ export default function Chatbot() {
               )}
             </div>
 
-            {/* Input */}
-            <div className="p-4 border-t border-boheme-brown/5">
+            {/* Input Form */}
+            <form onSubmit={handleSubmit} className="p-4 border-t border-boheme-brown/5">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Digite sua mensagem..."
                   className="w-full bg-boheme-cream/50 py-4 pl-6 pr-14 rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-boheme-bronze transition-all"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                  value={value}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
                 />
                 <button
-                  onClick={handleSendMessage}
-                  disabled={isLoading}
+                  type="submit"
+                  disabled={isLoading || !value.trim()}
                   className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-boheme-brown text-white rounded-xl flex items-center justify-center hover:bg-boheme-bronze transition-colors disabled:opacity-50"
                 >
                   <Send className="w-4 h-4" />
                 </button>
               </div>
-            </div>
+            </form>
           </motion.div>
         )}
       </AnimatePresence>
