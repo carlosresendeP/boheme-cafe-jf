@@ -45,7 +45,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30 uppercase tracking-widest">
-          <p>© {year} <strong className='text-boheme-bronze'>Bohème Café</strong>. Todos os direitos reservados.</p>
+          <p>© {year} <strong className='text-boheme-bronze text-center'>Bohème Café</strong>. Todos os direitos reservados.</p>
           <p>Desenvolvido por <strong className="text-boheme-bronze font-semibold transition-colors">Carlos Resende</strong></p>
         </div>
       </div>
