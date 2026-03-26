@@ -1,46 +1,56 @@
-import { streamText, convertToModelMessages, type UIMessage } from 'ai';
-import { createOpenAI } from '@ai-sdk/openai';
+import { NextResponse } from 'next/server';
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '',
-});
+interface ChatRequest {
+  messages: { role: 'user' | 'model'; content: string }[];
+}
 
-const SYSTEM_INSTRUCTION = `
-Você é o Concierge Digital do Bohème Café, localizado em São Mateus, Juiz de Fora.
-Sua personalidade é elegante, acolhedora e prestativa (Boho Chic Moderno).
-Seu objetivo é ajudar os clientes com informações sobre o cardápio, ambiente, reservas e localização.
+interface N8nResponse {
+  output?: string;
+  text?: string;
+  response?: string;
+}
 
-Informações Importantes:
-- Endereço: R. Francisco Brandi, 177 - São Mateus, Juiz de Fora.
-- Horário: Seg-Sáb 08h-20h, Dom 09h-18h.
-- Especialidades: Tarte Au Citron, Cappuccino Vanille, Croque-monsieur, Café Caramel Cortado e Matcha Latte.
-- Diferenciais: Wi-Fi rápido, tomadas, ambiente climatizado, poltronas confortáveis (ideal para trabalho).
-- Reservas: Podem ser feitas pelo site ou WhatsApp.
-- Preços: Ticket médio entre R$ 40-60.
+export async function POST(req: Request) {
+  try {
+    // 1. Recebe e tipa o corpo da requisição
+    const body = (await req.json()) as ChatRequest;
+    
+    // 2. Segurança: Pega a URL do webhook do .env (nunca exposta no client)
+    const webhookUrl = process.env.N8N_WEBHOOK_URL_CHAT;
 
-Responda de forma concisa e use um tom de "luxo acessível". Use emojis de café e sofisticação moderadamente.
-Se não souber algo, sugira falar com um humano pelo WhatsApp.
-`;
+    if (!webhookUrl) {
+      console.error('ERRO: N8N_WEBHOOK_URL_CHAT ausente no .env');
+      return NextResponse.json(
+        { error: 'Erro de configuração interna.' },
+        { status: 500 }
+      );
+    }
 
-export async function POST(req: Request): Promise<Response> {
-  // Tipando explicitamente o payload recebido do frontend
-  const body = (await req.json()) as { messages: UIMessage[] };
-  const { messages } = body;
+    // 3. Chamada segura para o n8n
+    const n8nResponse = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Passamos o histórico de mensagens completo
+      body: JSON.stringify(body),
+    });
 
-  // Converte UIMessage (do client) para ModelMessage (usado pelo streamText)
-  const uiMessages = messages.map(({ id, ...rest }) => {
-    // `id` não é enviado ao `streamText` (é interno do cliente).
-    void id;
-    return rest;
-  });
-  const modelMessages = await convertToModelMessages(uiMessages as Array<Omit<UIMessage, 'id'>>);
+    if (!n8nResponse.ok) {
+      throw new Error(`O n8n retornou status: ${n8nResponse.status}`);
+    }
 
-  const result = streamText({
-    model: openai('gpt-4.1-mini'),
-    system: SYSTEM_INSTRUCTION,
-    messages: modelMessages,
-  });
+    // 4. Tratamento da resposta do n8n
+    const data = (await n8nResponse.json()) as N8nResponse;
+    const replyText = data.output || data.text || data.response || 'Desculpe, não consegui processar sua solicitação no momento.';
 
-  // Retorna streaming no formato esperado pelo `useChat` (UIMessage parts).
-  return result.toUIMessageStreamResponse();
+    return NextResponse.json({ reply: replyText });
+
+  } catch (error) {
+    console.error('Erro no proxy de chat:', error);
+    return NextResponse.json(
+      { error: 'Estou com dificuldades técnicas. Por favor, chame no WhatsApp.' },
+      { status: 500 }
+    );
+  }
 }

@@ -4,24 +4,27 @@ import { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, X, Send, Coffee, Loader2 } from 'lucide-react';
 import Markdown from 'react-markdown';
-import { useChat } from '@ai-sdk/react';
-import type { UIMessage } from 'ai';
+
+// Tipagem clara para as nossas mensagens
+interface Message {
+  id: string;
+  role: 'user' | 'model';
+  content: string;
+}
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showPrompt, setShowPrompt] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   
-  // Tipagem forte para a ref da div de scroll
+  // Estado manual das mensagens e do loading
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { messages, sendMessage, status } = useChat();
-  const isLoading = status === 'submitted' || status === 'streaming';
-
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPrompt(true);
-    }, 15000);
+    const timer = setTimeout(() => setShowPrompt(true), 15000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -31,28 +34,54 @@ export default function Chatbot() {
     }
   }, [messages]);
 
-  // Função tipada para os botões de resposta rápida
-  const handleQuickReply = async (text: string): Promise<void> => {
-    const trimmed = text.trim();
-    if (!trimmed || isLoading) return;
-    await sendMessage({ text: trimmed });
-  };
+  // Função centralizada para enviar mensagem para nossa API
+  const sendMessageToAPI = async (text: string) => {
+    if (!text.trim() || isLoading) return;
 
-  const extractMessageText = (message: UIMessage): string => {
-    // O UIMessage armazena o texto dentro de `parts`.
-    return message.parts
-      .filter((p) => p.type === 'text')
-      .map((p) => p.text)
-      .join('');
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    const trimmed = value.trim();
-    if (!trimmed || isLoading) return;
-
+    const userMessage: Message = { id: crypto.randomUUID(), role: 'user', content: text };
+    
+    // Atualiza a tela imediatamente com a mensagem do usuário
+    setMessages((prev) => [...prev, userMessage]);
     setValue('');
-    await sendMessage({ text: trimmed });
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // Envia o histórico atual + a nova mensagem
+        body: JSON.stringify({ messages: [...messages, userMessage] }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro na comunicação.');
+      }
+
+      // Adiciona a resposta do bot na tela
+      const botMessage: Message = { id: crypto.randomUUID(), role: 'model', content: data.reply };
+      setMessages((prev) => [...prev, botMessage]);
+
+    } catch (error) {
+      const errorMsg: Message = { 
+        id: crypto.randomUUID(), 
+        role: 'model', 
+        content: 'Estou com instabilidade no sistema. Poderia tentar novamente em instantes?' 
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleQuickReply = (text: string): void => {
+    sendMessageToAPI(text);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    sendMessageToAPI(value);
   };
 
   return (
@@ -125,14 +154,14 @@ export default function Chatbot() {
                   </div>
                 </div>
               )}
-              {messages.map((m: UIMessage) => (
+              {messages.map((m: Message) => (
                 <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${
                     m.role === 'user' 
                       ? 'bg-boheme-bronze text-white rounded-tr-none' 
                       : 'bg-boheme-cream text-boheme-brown rounded-tl-none'
                   }`}>
-                    <Markdown>{extractMessageText(m)}</Markdown>
+                    <Markdown>{m.content}</Markdown>
                   </div>
                 </div>
               ))}
@@ -154,6 +183,7 @@ export default function Chatbot() {
                   className="w-full bg-boheme-cream/50 py-4 pl-6 pr-14 rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-boheme-bronze transition-all"
                   value={value}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+                  disabled={isLoading}
                 />
                 <button
                   type="submit"
