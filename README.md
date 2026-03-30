@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Boheme Café JF ☕
 
-## Getting Started
+Bem-vindo ao repositório do **Boheme Café JF**, um projeto de site moderno, elegante e responsivo para uma cafeteria, desenvolvido com as tecnologias mais recentes do ecossistema React.
 
-First, run the development server:
+## 📌 Sobre o Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O Boheme Café JF é uma landing page imersiva que apresenta a essência, o cardápio e o ambiente de uma cafeteria moderna e acolhedora. O site foi projetado com foco na experiência do usuário (UX) e em uma interface do usuário (UI) premium, utilizando animações suaves e um design responsivo.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O layout é composto por várias seções estratégicas:
+- **Hero:** Uma introdução impactante, com possibilidade de vídeo de fundo.
+- **A Essência:** A história e os valores do café.
+- **Destaques do Chef:** Os produtos e criações mais especiais.
+- **Menu:** O cardápio digital do estabelecimento.
+- **O Ambiente & Galeria:** Uma visão imersiva do espaço físico.
+- **Arte do Café:** Destaque para a especialidade barista.
+- **Avaliações:** Prova social através do depoimento de clientes.
+- **Eventos:** Experiências que acontecem no local.
+- **Localização & Contato:** Como chegar à cafeteria.
+- **Reserva:** Um formulário moderno e validado para agendamento de mesas.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Tecnologias e Ferramentas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Este projeto foi construído utilizando as seguintes tecnologias principais:
 
-## Learn More
+- **[Next.js 16](https://nextjs.org/):** Framework React para renderização e roteamento.
+- **[React 19](https://react.dev/):** Biblioteca JavaScript para construção da interface.
+- **[Tailwind CSS v4](https://tailwindcss.com/):** Framework CSS utilitário para estilização rápida e responsiva.
+- **[Framer Motion](https://motion.dev/):** Biblioteca principal para marcação e animações suaves na interface.
+- **[Shadcn UI / Radix primitives]:** Componentes acessíveis como base de UI (`clsx`, `tailwind-merge`, `class-variance-authority`).
+- **[React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/):** Para gerenciamento e validação no frontend do formulário de reservas.
+- **[Lucide React](https://lucide.dev/) / [React Icons](https://react-icons.github.io/react-icons/):** Iconografia.
+- **[Embla Carousel](https://www.embla-carousel.com/):** Para criação dos sliders e carrosséis.
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Como Executar o Projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Siga os passos abaixo para rodar o projeto localmente na sua máquina:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Pré-requisitos
+- [Node.js](https://nodejs.org/) (versão 18+ recomendada)
+- Gerenciador de pacotes da sua preferência (npm, yarn, pnpm, bun)
 
-## Deploy on Vercel
+### Passo a passo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone o repositório:**
+   ```bash
+   git clone <url-do-repositorio>
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Navegue até a pasta do projeto:**
+   ```bash
+   cd boheme-cafe-jf
+   ```
+
+3. **Instale as dependências:**
+   ```bash
+   npm install
+   # ou
+   yarn install
+   # ou
+   pnpm install
+   ```
+
+4. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   # ou
+   pnpm dev
+   ```
+
+5. **Acesse o site:**
+   Abra [http://localhost:3000](http://localhost:3000) com o seu navegador para ver o resultado.
+
+## 🏗️ Estrutura do Projeto
+
+A estrutura de diretórios do projeto segue os padrões recomendados do Next.js (App Router):
+
+- `/app`: Configurações de rotas (`page.tsx`, `layout.tsx`), estilos globais e outras convenções do Next.js.
+- `/components`: Componentes reutilizáveis da interface da aplicação agrupados por seções (Hero, Menu, Environment, Reservation, etc).
+- `/public`: Arquivos estáticos como imagens, vídeos, ícones e fontes.
+- `/lib`: Utilitários e funções de suporte (ex: validações, formatação).
+- `/data`: Dados estáticos da aplicação (mocks de itens de menu, avaliações, etc).
+- `/docs`: Documentação adicional e anotações.
+
+## 📜 Licença
+
+Este projeto foi desenvolvido para fins de demonstração, aprendizado e portfólio. Estrutura baseada e gerada sob o ecossistema Next.js.
