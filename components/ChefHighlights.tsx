@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 
 const image = '/boheme-logos.png';
 
@@ -52,15 +53,20 @@ export default function ChefHighlights() {
               transition={{ duration: 0.8, delay: index * 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="group relative overflow-hidden rounded-2xl cursor-pointer"
             >
-              <div className="aspect-linear-[3/4] overflow-hidden">
-                <motion.img
+              <div className="aspect-[3/4] overflow-hidden relative">
+                <motion.div
                   whileHover={{ scale: 1.15 }}
                   transition={{ duration: 0.8 }}
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
+                  className="w-full h-full relative"
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </motion.div>
               </div>
               <div className="absolute inset-0 bg-linear-to-t from-boheme-brown/90 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
               
@@ -91,7 +97,7 @@ export default function ChefHighlights() {
 
     </section>
     <div 
-      className="w-full h-30 bg-boheme-bronze bg-fixed bg-center bg-cover bg-no-repeat"
+      className="w-full h-32 bg-boheme-bronze bg-fixed bg-center bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${image})` }}
     />
     </>

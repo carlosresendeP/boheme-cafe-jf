@@ -20,25 +20,37 @@ export default function BackgroundVideo() {
     canvas.width = 1920;
     canvas.height = 1080;
 
-    // ── Pre-carregar todos os frames ──────────────────────────────────────
-    const images: HTMLImageElement[] = Array.from({ length: FRAME_COUNT }, (_, i) => {
-      const img = new Image();
-      img.src = frameSrc(i);
-      return img;
-    });
+    // ── Pre-carregar frame inicial com prioridade ────────────────────────
+    const images: HTMLImageElement[] = new Array(FRAME_COUNT);
 
-    // Carrega o frame inicial com prioridade e faz fade-in ao pintar
-    const initialFrame = images[FRAME_COUNT - 1];
+    const initialFrame = new Image();
+    initialFrame.src = frameSrc(FRAME_COUNT - 1);
+    images[FRAME_COUNT - 1] = initialFrame;
+
+    const loadRemainingFrames = () => {
+      // Lazy load de todos os outros quadros em background
+      for (let i = 0; i < FRAME_COUNT - 1; i++) {
+        if (!images[i]) {
+          const img = new Image();
+          img.src = frameSrc(i);
+          images[i] = img;
+        }
+      }
+    };
+
     initialFrame.onload = () => {
       ctx.drawImage(initialFrame, 0, 0, canvas.width, canvas.height);
       // Revela o canvas suavemente após o primeiro frame estar pronto
       canvas.style.transition = 'opacity 0.4s ease';
       canvas.style.opacity = '0.85';
+      loadRemainingFrames();
     };
+    
     // Se a imagem já estava em cache, dispara imediatamente
     if (initialFrame.complete && initialFrame.naturalWidth > 0) {
       ctx.drawImage(initialFrame, 0, 0, canvas.width, canvas.height);
       canvas.style.opacity = '0.85';
+      loadRemainingFrames();
     }
 
     // ── Scroll handler ────────────────────────────────────────────────────

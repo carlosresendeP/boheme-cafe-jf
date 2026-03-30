@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 import { Wifi, Battery, Thermometer, Armchair } from 'lucide-react';
 
 const features = [
@@ -58,16 +59,21 @@ export default function Environment() {
 
         {/* Right: Image */}
         <div className="w-full lg:w-1/2 h-[500px] lg:h-auto relative overflow-hidden">
-          <motion.img
+          <motion.div
             initial={{ scale: 1.2 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            src="/intern-photo.png"
-            alt="Work Environment"
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
+            className="w-full h-full relative"
+          >
+            <Image
+              src="/intern-photo.png"
+              alt="Work Environment"
+              fill
+              sizes="100vw, 50vw"
+              className="object-cover"
+            />
+          </motion.div>
           <div className="absolute inset-0 bg-boheme-brown/20" />
         </div>
       </div>

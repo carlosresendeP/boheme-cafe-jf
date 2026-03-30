@@ -19,8 +19,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bohème Café",
-  description: "Bohème Café - Caféteria no coração de São Mateus, Juiz de Fora",
+  metadataBase: new URL("https://bohemecafe.com.br"),
+  title: "Bohème Café | Café e Conforto em Juiz de Fora",
+  description: "Bohème Café - Caféteria premium no coração de São Mateus, Juiz de Fora. Onde o conforto encontra a arte do sabor.",
+  keywords: ["café", "cafeteria", "são mateus", "juiz de fora", "café especial", "doces", "conforto", "boheme"],
+  authors: [{ name: "Bohème Café" }],
+  openGraph: {
+    title: "Bohème Café | Café e Conforto em Juiz de Fora",
+    description: "Bohème Café - Caféteria premium no coração de São Mateus, Juiz de Fora. Onde o conforto encontra a arte do sabor.",
+    url: "https://bohemecafe.com.br",
+    siteName: "Bohème Café",
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bohème Café",
+    description: "Bohème Café - Caféteria premium no coração de São Mateus.",
+  },
 };  
 
 export default function RootLayout({

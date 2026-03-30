@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 
 export default function Essence() {
   return (
@@ -13,14 +14,19 @@ export default function Essence() {
           className="relative"
         >
           <div className="aspect-4/5 rounded-2xl overflow-hidden shadow-2xl">
-            <motion.img
+            <motion.div
               whileHover={{ scale: 1.05 }}  
               transition={{ duration: 0.6 }}
-              src="/intern-photo.png"
-              alt="Bohème Interior"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+              className="w-full h-full relative"
+            >
+              <Image
+                src="/intern-photo.png"
+                alt="Bohème Interior"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </motion.div>
           </div>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -29,14 +35,19 @@ export default function Essence() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="absolute -bottom-8 -right-8 w-64 h-64 rounded-2xl overflow-hidden shadow-2xl hidden md:block border-8 border-boheme-cream"
           >
-            <motion.img
+            <motion.div
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.6 }}
-              src="/photo-intern-coffe.png"
-              alt="Coffee Details"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+              className="w-full h-full relative"
+            >
+              <Image
+                src="/photo-intern-coffe.png"
+                alt="Coffee Details"
+                fill
+                sizes="256px"
+                className="object-cover"
+              />
+            </motion.div>
           </motion.div>
         </motion.div>
 
